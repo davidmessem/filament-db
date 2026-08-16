@@ -1,1 +1,132 @@
-https://www.temu.com/bgc_instructions.html?goods_id=601099517846759
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Printing Filament Properties & Engineering Comparison</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --primary: #38bdf8;
+      --green-bg: #14532d;
+      --light-green-bg: #166534;
+      --yellow-bg: #713f12;
+      --orange-bg: #7c2d12;
+      --red-bg: #7f1d1d;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 16px; }
+    .container { max-width: 1400px; margin: 0 auto; }
+    header { margin-bottom: 20px; }
+    h1 { font-size: 1.5rem; margin: 0 0 8px 0; color: var(--primary); }
+    p { color: var(--text-muted); margin: 0; font-size: 0.9rem; }
+    .search-box { padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); font-size: 0.95rem; width: 100%; max-width: 320px; margin-bottom: 16px; box-sizing: border-box; }
+    .table-container { overflow-x: auto; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; white-space: nowrap; }
+    th { background-color: #0f172a; color: var(--text-muted); padding: 10px 14px; font-weight: 600; border-bottom: 1px solid var(--border); cursor: pointer; }
+    td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+    .tier-5 { background-color: var(--green-bg) !important; color: #4ade80; font-weight: 600; }
+    .tier-4 { background-color: var(--light-green-bg) !important; color: #86efac; }
+    .tier-3 { background-color: var(--yellow-bg) !important; color: #fde047; }
+    .tier-2 { background-color: var(--orange-bg) !important; color: #fdba74; }
+    .tier-1 { background-color: var(--red-bg) !important; color: #fca5a5; font-weight: 600; }
+    .filament-name { font-weight: 600; color: var(--text); background-color: var(--card-bg) !important; position: sticky; left: 0; z-index: 10; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>3D Filament Comparison Matrix</h1>
+    <p>Tap headers to sort. Type to filter materials.</p>
+  </header>
+  <input type="text" id="searchInput" class="search-box" placeholder="Search filaments...">
+  <div class="table-container">
+    <table>
+      <thead><tr id="headerRow"></tr></thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+</div>
+<script>
+  const rawData = [
+    { "Filament": "PBT Pro", "Tensile (MPa)": 40, "Flexural Modulus (MPa)": 2000, "Elongation (%)": "261.9%", "Notched Impact (kJ/m²)": 19.1, "HDT 0.45MPa (°C)": 60, "HDT 1.80MPa (°C)": 36.5, "Heat Res No Load (°C)": 150, "Chemical Resistance": "5 - Excellent", "UV Resistance": "4 - Good", "Moisture Absorption": "1 - Very Low", "Drying Required": "2 - Recommended", "Print Difficulty": "2 - Easy", "Enclosure Required": "1 - No", "Nozzle Temp (°C)": "240-260", "Bed Temp (°C)": "60-80" },
+    { "Filament": "ABS", "Tensile (MPa)": 40, "Flexural Modulus (MPa)": 2000, "Elongation (%)": "20%", "Notched Impact (kJ/m²)": 20, "HDT 0.45MPa (°C)": 85, "HDT 1.80MPa (°C)": 80, "Heat Res No Load (°C)": 105, "Chemical Resistance": "3 - Moderate", "UV Resistance": "1 - Poor", "Moisture Absorption": "2 - Low", "Drying Required": "2 - Recommended", "Print Difficulty": "3 - Medium", "Enclosure Required": "3 - Yes", "Nozzle Temp (°C)": "240-270", "Bed Temp (°C)": "90-110" },
+    { "Filament": "PETG", "Tensile (MPa)": 50, "Flexural Modulus (MPa)": 2000, "Elongation (%)": "50%", "Notched Impact (kJ/m²)": 8, "HDT 0.45MPa (°C)": 70, "HDT 1.80MPa (°C)": 62, "Heat Res No Load (°C)": 80, "Chemical Resistance": "4 - Good", "UV Resistance": "4 - Good", "Moisture Absorption": "3 - Medium", "Drying Required": "3 - Yes", "Print Difficulty": "2 - Easy", "Enclosure Required": "1 - No", "Nozzle Temp (°C)": "230-250", "Bed Temp (°C)": "70-90" },
+    { "Filament": "PA12 (Nylon 12)", "Tensile (MPa)": 45, "Flexural Modulus (MPa)": 1200, "Elongation (%)": "300%", "Notched Impact (kJ/m²)": 12, "HDT 0.45MPa (°C)": 110, "HDT 1.80MPa (°C)": 50, "Heat Res No Load (°C)": 175, "Chemical Resistance": "5 - Excellent", "UV Resistance": "3 - Moderate", "Moisture Absorption": "4 - High", "Drying Required": "4 - Critical", "Print Difficulty": "4 - Hard", "Enclosure Required": "2 - Recommended", "Nozzle Temp (°C)": "250-280", "Bed Temp (°C)": "80-100" },
+    { "Filament": "PA6 (Unfilled Nylon 6)", "Tensile (MPa)": 80, "Flexural Modulus (MPa)": 2800, "Elongation (%)": "150%", "Notched Impact (kJ/m²)": 6, "HDT 0.45MPa (°C)": 160, "HDT 1.80MPa (°C)": 60, "Heat Res No Load (°C)": 180, "Chemical Resistance": "5 - Excellent", "UV Resistance": "3 - Moderate", "Moisture Absorption": "4 - High", "Drying Required": "4 - Critical", "Print Difficulty": "4 - Hard", "Enclosure Required": "3 - Yes", "Nozzle Temp (°C)": "250-280", "Bed Temp (°C)": "80-100" },
+    { "Filament": "PLA", "Tensile (MPa)": 60, "Flexural Modulus (MPa)": 3000, "Elongation (%)": "10%", "Notched Impact (kJ/m²)": 4, "HDT 0.45MPa (°C)": 55, "HDT 1.80MPa (°C)": 52, "Heat Res No Load (°C)": 60, "Chemical Resistance": "3 - Moderate", "UV Resistance": "2 - Fair", "Moisture Absorption": "2 - Low", "Drying Required": "1 - No", "Print Difficulty": "1 - Very Easy", "Enclosure Required": "1 - No", "Nozzle Temp (°C)": "190-220", "Bed Temp (°C)": "50-60" },
+    { "Filament": "TPU (95A)", "Tensile (MPa)": 30, "Flexural Modulus (MPa)": 100, "Elongation (%)": "500%", "Notched Impact (kJ/m²)": 99, "HDT 0.45MPa (°C)": 50, "HDT 1.80MPa (°C)": 35, "Heat Res No Load (°C)": 60, "Chemical Resistance": "4 - Good", "UV Resistance": "4 - Good", "Moisture Absorption": "4 - High", "Drying Required": "4 - Critical", "Print Difficulty": "3 - Medium", "Enclosure Required": "1 - No", "Nozzle Temp (°C)": "220-240", "Bed Temp (°C)": "40-60" },
+    { "Filament": "ASA", "Tensile (MPa)": 45, "Flexural Modulus (MPa)": 2100, "Elongation (%)": "15%", "Notched Impact (kJ/m²)": 18, "HDT 0.45MPa (°C)": 90, "HDT 1.80MPa (°C)": 86, "Heat Res No Load (°C)": 105, "Chemical Resistance": "4 - Good", "UV Resistance": "5 - Excellent", "Moisture Absorption": "2 - Low", "Drying Required": "2 - Recommended", "Print Difficulty": "3 - Medium", "Enclosure Required": "3 - Yes", "Nozzle Temp (°C)": "240-270", "Bed Temp (°C)": "90-110" },
+    { "Filament": "PC (Polycarbonate)", "Tensile (MPa)": 70, "Flexural Modulus (MPa)": 2400, "Elongation (%)": "10%", "Notched Impact (kJ/m²)": 40, "HDT 0.45MPa (°C)": 110, "HDT 1.80MPa (°C)": 100, "Heat Res No Load (°C)": 145, "Chemical Resistance": "4 - Good", "UV Resistance": "3 - Moderate", "Moisture Absorption": "3 - Medium", "Drying Required": "4 - Critical", "Print Difficulty": "5 - Very Hard", "Enclosure Required": "4 - Yes (Active)", "Nozzle Temp (°C)": "270-290", "Bed Temp (°C)": "100-120" },
+    { "Filament": "PA6-CF", "Tensile (MPa)": 130, "Flexural Modulus (MPa)": 7000, "Elongation (%)": "3%", "Notched Impact (kJ/m²)": 10, "HDT 0.45MPa (°C)": 190, "HDT 1.80MPa (°C)": 175, "Heat Res No Load (°C)": 215, "Chemical Resistance": "5 - Excellent", "UV Resistance": "3 - Moderate", "Moisture Absorption": "4 - High", "Drying Required": "4 - Critical", "Print Difficulty": "3 - Medium", "Enclosure Required": "2 - Recommended", "Nozzle Temp (°C)": "270-300", "Bed Temp (°C)": "80-100" },
+    { "Filament": "PETG-CF", "Tensile (MPa)": 75, "Flexural Modulus (MPa)": 4500, "Elongation (%)": "5%", "Notched Impact (kJ/m²)": 6, "HDT 0.45MPa (°C)": 75, "HDT 1.80MPa (°C)": 70, "Heat Res No Load (°C)": 85, "Chemical Resistance": "4 - Good", "UV Resistance": "4 - Good", "Moisture Absorption": "3 - Medium", "Drying Required": "3 - Yes", "Print Difficulty": "2 - Easy", "Enclosure Required": "1 - No", "Nozzle Temp (°C)": "240-260", "Bed Temp (°C)": "70-90" },
+    { "Filament": "ABS-GF", "Tensile (MPa)": 50, "Flexural Modulus (MPa)": 3500, "Elongation (%)": "4%", "Notched Impact (kJ/m²)": 12, "HDT 0.45MPa (°C)": 95, "HDT 1.80MPa (°C)": 90, "Heat Res No Load (°C)": 110, "Chemical Resistance": "3 - Moderate", "UV Resistance": "1 - Poor", "Moisture Absorption": "2 - Low", "Drying Required": "2 - Recommended", "Print Difficulty": "2 - Easy", "Enclosure Required": "2 - Recommended", "Nozzle Temp (°C)": "250-270", "Bed Temp (°C)": "90-110" }
+  ];
+
+  const invertedKeys = ["difficulty", "moisture", "enclosure", "drying"];
+  let currentSortKey = null, sortAsc = true;
+  const headers = Object.keys(rawData[0]);
+
+  const colBounds = {};
+  headers.forEach(key => {
+    const vals = rawData.map(d => parseVal(d[key])).filter(v => typeof v === 'number' && !isNaN(v));
+    if (vals.length > 0) colBounds[key] = { min: Math.min(...vals), max: Math.max(...vals) };
+  });
+
+  function parseVal(val) {
+    if (typeof val === 'number') return val;
+    if (typeof val === 'string') {
+      if (/^\d+(\.\d+)?%$/.test(val)) return parseFloat(val);
+      if (/^\d+\s*-/.test(val)) return parseInt(val);
+      const match = val.match(/^(\d+(\.\d+)?)/);
+      if (match) return parseFloat(match[1]);
+    }
+    return null;
+  }
+
+  function getTierClass(key, rawVal) {
+    if (key === "Filament" || key.includes("Temp")) return "";
+    const num = parseVal(rawVal);
+    if (num === null) return "";
+    const isInverted = invertedKeys.some(k => key.toLowerCase().includes(k));
+    if (typeof rawVal === 'string' && /^\d\s*-/.test(rawVal)) {
+      const rank = parseInt(rawVal);
+      return (isInverted ? {1:'tier-5', 2:'tier-4', 3:'tier-3', 4:'tier-2', 5:'tier-1'} : {1:'tier-1', 2:'tier-2', 3:'tier-3', 4:'tier-4', 5:'tier-5'})[rank] || "";
+    }
+    const bounds = colBounds[key];
+    if (!bounds || bounds.min === bounds.max) return "";
+    let tier = 1 + Math.min(Math.floor(((num - bounds.min) / (bounds.max - bounds.min)) * 5), 4);
+    if (isInverted) tier = 6 - tier;
+    return `tier-${tier}`;
+  }
+
+  function renderTable(data) {
+    document.getElementById("headerRow").innerHTML = headers.map(k => `<th onclick="handleSort('${k}')">${k}</th>`).join("");
+    document.getElementById("tableBody").innerHTML = data.map(row => 
+      `<tr>` + headers.map(k => `<td class="${k === 'Filament' ? 'filament-name' : ''} ${getTierClass(k, row[k])}">${row[k]}</td>`).join("") + `</tr>`
+    ).join("");
+  }
+
+  function handleSort(key) {
+    sortAsc = (currentSortKey === key) ? !sortAsc : true;
+    currentSortKey = key;
+    const sorted = [...filterData()].sort((a, b) => {
+      let valA = parseVal(a[key]) ?? a[key], valB = parseVal(b[key]) ?? b[key];
+      return (valA < valB ? -1 : valA > valB ? 1 : 0) * (sortAsc ? 1 : -1);
+    });
+    renderTable(sorted);
+  }
+
+  function filterData() {
+    const q = document.getElementById("searchInput").value.toLowerCase();
+    return rawData.filter(row => Object.values(row).some(v => String(v).toLowerCase().includes(q)));
+  }
+
+  document.getElementById("searchInput").addEventListener("input", () => renderTable(filterData()));
+  renderTable(rawData);
+</script>
+</body>
+</html>
